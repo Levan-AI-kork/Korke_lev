@@ -1,16 +1,84 @@
-# This is a sample Python script.
+# # BankAccount კლასი - საბანკო ანგარიშის სიმულაცია
+#
+# class BankAccount:
+#
+#     def __init__(self, owner, balance):
+#         self.owner = owner          # საჯარო ატრიბუტი - მფლობელის სახელი
+#         self.__balance = balance    # პრივატული ატრიბუტი - ბალანსი (გარედან პირდაპირ არ იცვლება)
+#
+#     # თანხის შეტანა ანგარიშზე
+#     def deposit(self, amount):
+#         if amount > 0:
+#             self.__balance = self.__balance + amount
+#         else:
+#             print("შეცდომა: შეტანილი თანხა უნდა იყოს დადებითი რიცხვი!")
+#
+#     # თანხის გატანა ანგარიშიდან
+#     def withdraw(self, amount):
+#         if amount > self.__balance:
+#             print("შეცდომა: არასაკმარისი თანხაა ბალანსზე!")
+#         else:
+#             self.__balance = self.__balance - amount
+#
+#     # property - ბალანსის წაკითხვა (account.balance)
+#     @property
+#     def balance(self):
+#         return self.__balance
+#
+#     # setter - ბალანსის დაყენება (account.balance = value)
+#     @balance.setter
+#     def balance(self, value):
+#         if value < 0:
+#             print("შეცდომა: ბალანსი ვერ იქნება უარყოფითი!")
+#         else:
+#             self.__balance = value
+#
+#     # კლასის ობიექტის ტექსტური სახე print()-ისთვის
+#     def __str__(self):
+#         return f"Owner: {self.owner} | Balance: {self.__balance} GEL"
+#
+#
+# # --- გამოყენების მაგალითი ---
+#
+# account = BankAccount("Nika", 1000)
+# print(account)
+#
+# account.deposit(500)
+# print(account.balance)
+#
+# account.withdraw(200)
+# print(account.balance)
 
-# Press Shift+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
+
+class User:
+    def __init__(self, username, email):
+        self.username = username
+        self.email = email
+
+    def login(self):
+        print(f"{self.username} logged in")
 
 
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
+class Admin(User):
+    def delete_user(self):
+        print(f"{self.username} deleted a user")
 
 
-# Press the green button in the gutter to run the script.
-if __name__ == '__main__':
-    print_hi('PyCharm')
+class Logger:
+    def log(self):
+        print("Logging action...")
 
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+
+class SuperAdmin(Admin, Logger):
+    pass
+
+
+super_admin = SuperAdmin("Nika", "nika@example.com")
+super_admin.login()
+super_admin.delete_user()
+super_admin.log()
+
+print(SuperAdmin.mro())
+
+
+Python მეთოდს ეძებს კლასების იმ თანმიმდევრობით, რასაც mro() აჩვენებს: SuperAdmin → Admin → User → Logger → object. ანუ ჯერ თავად კლასში იძებნება, მერე მშობლებში — მარცხნიდან მარჯვნივ, თან ისე, რომ თითოეული კლასი სიაში მხოლოდ ერთხელ და თანმიმდევრულად გამოჩნდეს. როგორც კი პირველ კლასს იპოვის, სადაც ეს მეთოდია განსაზღვრული, იქვე ჩერდება.
